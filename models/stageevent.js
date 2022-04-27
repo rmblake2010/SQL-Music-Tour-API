@@ -3,37 +3,33 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Event extends Model {
+  class StageEvent extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Stage, StageEvent}) {
-      //stages
-      Event.belongsToMany(Stage, {
-        foreignKey: "event_id",
-        as: "stages",
-        through: StageEvent
-      })
+    static associate(models) {
+      // define association here
     }
   }
-  Event.init({
-    event_id: {
+  StageEvent.init({
+    stage_event_id: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
-      autoIncrement: true
-    },
-    name: {
-      type: DataTypes.STRING,
       allowNull: false
+    },
+    stage_id: {
+      type: DataTypes.INTEGER,
+    },
+    event_id: {
+      type: DataTypes.INTEGER
     }
-    
   }, {
     sequelize,
-    modelName: 'Event',
-    tableName: 'events',
-    timestamps: false
+    modelName: 'StageEvent',
+    tableName: 'stage_events'
   });
-  return Event;
+  return StageEvent;
 };
